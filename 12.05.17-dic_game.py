@@ -1,35 +1,52 @@
 import random
 
-print("Welcome to the english test!!\n"
+'''print("Welcome to the english test!!\n"
       "You will see the word on the russian language\n"
       "and then translate it on the next line.\n"
       "Good luck!\n")
-
-file = open("some.txt")
-
+'''
 #--------------------------------------------------
-dic = {}
-line1 = file.readline()
-line2 = file.readline()
+def makeDic():
+    file = open("some.txt")
 
-while line2 != '':
-    dic[line1.rstrip()] = line2.rstrip()
-    line1 = file.readline()
-    line2 = file.readline()
-file.close()
+    dic = {}
+    line = file.readline()
+
+    while line != '':
+        lineArr = line.split(' ')
+        dic[lineArr[0].rstrip()] = lineArr[1].rstrip()
+        line = file.readline()
+    file.close()
+    return dic
 #--------------------------------------------------
+
+def writeWord():
+    engWord = input('Enter English word: ').rstrip()
+    rusWord = input('Enter Russian word: ').rstrip()
+    line = engWord + ' ' + rusWord
+
+    file = open("some.txt", "a")
+    file.write('\n' + line)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++
-def victorine(num_of_quest):
+def victorine():
+    dic = makeDic()
+    for key in dic:
+        print (key, dic[key])
+    maxNumQues = len(dic)
+    numQues = int(input('Enter number of questions(max:' +  str(maxNumQues) + '): '))
+    
+    if numQues > maxNumQues:
+        numQues = len(dic)
+        
     right_answer = 0
-    used_words = []
 
-    for i in range(num_of_quest):
+    for i in range(numQues):
         word1, word2 = random.choice(list(dic.items()))
         dic.pop(word1)
         print(word2)
         inp_word = input('Translate: ')
-        if inp_word == word1[1 : len(word1) - 1]:
+        if inp_word == word1:
             right_answer += 1
-    print('Right answers: ' + str(right_answer) + '/' + str(num_of_quest))
+    print('Right answers: ' + str(right_answer) + '/' + str(numQues))
 #++++++++++++++++++++++++++++++++++++++++++++++++++

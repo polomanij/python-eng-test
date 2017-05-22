@@ -1,0 +1,6 @@
+dog собака
+cat кошка
+table стол
+border доска
+house домa
+aa bb
